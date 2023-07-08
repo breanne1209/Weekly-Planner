@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #173990;
+}
+
+body {
+    background-color: #FFFFFF;
+}
+
+/* Font Styles */
+h1 {
+    font-weight: 700;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+h3 {
+    font-weight: 500;
+    margin-top: .5em;
+}
+
+/* Spacing of texts */
+h1 {
+    text-align: center;
+    margin-top: 8rem;
+    margin-bottom: 1rem;
+}
+
+.sub-section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.move-center {
+    margin: 0 auto;
+    width: 1600px;
+}
+
+.week-group {
+   text-align: center;
+   display: flex;
+   justify-content: start;
+   width: 100%;
+   gap: 2em;
+   flex-wrap: wrap;
+   margin-top: 2em;
+}
+
+/* adjust smaller */
+@media (min-width: 320px) and (max-width: 700px) {
+    .move-center {
+        margin: 0 auto;
+        width: 320px;
+    }
+    
+}
+
+.text-box {
+    height: 200px;
+    width: 250px;
+}
+
+label {
+    text-align: center;
+    position: relative;
+    left: 35px;
+}
+
+/* days of week boxes */
+.day {
+    height: 300px;
+    width: 350px;
+}
+
+.day-title {
+    margin-bottom: .5em;
+}
+
+.span {
+    background-color: #ffffff;
+    padding-top: .2em;
+    padding-bottom: .2em;
+    border-bottom: 1px solid #173990;
+}
+
+.input {
+    margin-top: .5em;
+}
+
+/* input styling */
+input {
+    border: none;
+    border-bottom: 2px solid #889dcf;
+    background: transparent;
+    font-size: 16px;
+    height: 40px;
+    width: 290px;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 2px solid #173990;
+}
+
+input:hover {
+    border-bottom: 2px solid #173990;
+}
+
+/* Colors of days */
+.day {
+    border: solid #173990;
+    background-color: #f7f4f4;
+    background-image: url(/Images/grid.jpg);
+}
+
+/* misc color */
+select {
+    background-color: white;
+    border: 1px solid #173990;
+}
+
+#text-area {
+    border: solid 3px #173990;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+#add-button {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    top: 10px;
+    cursor: pointer;
+}
+
+ul li {
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 2px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    right: 20px;
+}
+
+ul li:before {
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url(/images/circle.png);
+    background-size: cover;
+    background-position: center;
+    top: 12px;
+    left: -5px;
+}
+
+ul li.checked {
+    color: #173990;
+    text-decoration: line-through;
+}
+
+ul li.checked::before {
+    background-image: url(/images/checked.png);
+}
+
+ul li span{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color: #173990;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+ul li span:hover {
+    background: #a2b2db;
+}
