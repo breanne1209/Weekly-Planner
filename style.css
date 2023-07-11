@@ -8,6 +8,18 @@ body {
     background-color: #FFFFFF;
 }
 
+p {
+    text-align: center;
+}
+
+#weather-data {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 /* Font Styles */
 h1 {
     font-weight: 700;
@@ -25,7 +37,7 @@ h3 {
 /* Spacing of texts */
 h1 {
     text-align: center;
-    margin-top: 5rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -38,6 +50,13 @@ h1 {
 .move-center {
     margin: 0 auto;
     width: 1600px;
+    margin-bottom: 1rem;
+}
+
+#weather-icon {
+    margin-top: .5rem;
+    width: 50px;
+    height: 50px;
 }
 
 .week-group {
