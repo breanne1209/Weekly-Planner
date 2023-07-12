@@ -8,6 +8,33 @@ body {
     background-color: #FFFFFF;
 }
 
+#text-area {
+    box-sizing: border-box;
+    resize: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border: 2px solid #889dcf;
+    background-color: transparent;
+    width: 360px;
+    height: 280px;
+    padding: 8px;
+    margin-bottom: 20px;
+    outline: none;
+    color: #173990;
+  }
+  
+  #text-area:focus {
+    border-color: #173990;
+  }
+  
+
+  #text-area-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 p {
     text-align: center;
 }
@@ -84,13 +111,15 @@ h1 {
   }
   
   @media (min-width: 768px) and (max-width: 1199.98px) {
+    @supports (-webkit-min-device-pixel-ratio: 0) {
   
     .move-center {
       margin: 0 auto;
       width: 100%;
     }
-  
+}
     @media (max-width: 991.98px) {
+        @supports (-webkit-min-device-pixel-ratio: 0) {
      
       .move-center {
         max-width: 7680px;
@@ -98,38 +127,45 @@ h1 {
         justify-content: center;
       }
     }
+}
     
     @media (max-width: 975px) {
+        @supports (-webkit-min-device-pixel-ratio: 0) {
      
       .move-center {
         max-width: 975px;
         padding-left: 20px;
       }
     }
+}
     
     @media (max-width: 952px) {
+        @supports (-webkit-min-device-pixel-ratio: 0) {
       
       .move-center {
         max-width: 952px;
         padding-left: 20px; 
       }
     }
+}
     
     @media (min-width: 992px) and (max-width: 1199.98px) {
+        @supports (-webkit-min-device-pixel-ratio: 0) {
       .move-center {
         max-width: 900px;
         padding-left: 20px;
       }
       #text-area {
         max-width: 1000px; 
-        height: 500px; 
+        height: 270px; 
         padding-left: 10px;
         margin-bottom: 20px; 
     }
     }
+}
   }
   @media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) {
-
+@supports (-webkit-min-device-pixel-ratio: 0) {
     .move-center {
       max-width: 1200px; 
       padding-left: 20px;
@@ -141,8 +177,23 @@ h1 {
         margin-bottom: 20px; 
     }
   }
+}
   
-
+  @media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) {
+    @supports (-webkit-min-device-pixel-ratio: 0) {
+      .move-center {
+        max-width: 1200px;
+        padding-left: 20px;
+      }
+      #text-area {
+        max-width: 900px;
+        height: 270px;
+        padding-left: 10px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  
 .text-box {
     height: 200px;
     width: 250px;
@@ -151,7 +202,7 @@ h1 {
 label {
     text-align: center;
     position: relative;
-    left: 35px;
+    left: 45px;
 }
 
 /* days of week boxes */

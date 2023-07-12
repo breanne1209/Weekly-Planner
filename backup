@@ -62,6 +62,13 @@ const checkScroll = () => {
   });
 };
 
+const getDayTitle = (date) => {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayIndex = date.getDay();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  return `${days[dayIndex].slice(0, 3)} ${month}/${day}`;
+};
 
 const getWeatherData = () => {
   const xhr = new XMLHttpRequest();
@@ -105,7 +112,6 @@ const displayWeatherData = (weatherData) => {
       imagePath = '/images/cloud.png';
       break;
     case 'Rainy':
-    case 'Moderate rain':
       imagePath = '/images/rainy.png';
       break;
     default:
@@ -141,19 +147,42 @@ window.addEventListener('load', () => {
     const daysToAdd = (week - 1) * 7;
     startDate.setDate(startDate.getDate() + daysToAdd);
 
-    const dayElements = document.querySelectorAll('.day');
-    dayElements.forEach((dayElement, index) => {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(currentDate.getDate() + index);
+ dayTitles.forEach((title, index) => {
+  const date = new Date(startDate);
+  date.setDate(startDate.getDate() + index);
+  title.textContent = getDayTitle(date);
+  title.parentElement.setAttribute('data-day', index);
 
-      const dayOfWeek = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-      const monthDay = currentDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+      const key = `${month}-${week}-${index}`;
+      const dayEntries = entries[key] || [];
+      const listElement = title.parentElement.querySelector('ul');
 
-      const [monthDigit, dayDigit] = monthDay.split('/').map(str => parseInt(str, 10));
-      const formattedMonthDay = `${monthDigit}/${dayDigit}`;
+      listElement.innerHTML = ''; // Clear previous entries
 
-      dayElement.querySelector('h3').textContent = `${dayOfWeek} ${formattedMonthDay}`;
+      dayEntries.forEach((entry) => {
+        const li = document.createElement('li');
+        li.innerHTML = entry;
+
+        let span = document.createElement('span');
+        span.innerHTML = "\u00d7";
+        span.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.target.parentElement.remove();
+          checkScroll();
+          saveEntries();
+        });
+
+        li.appendChild(span);
+
+        li.addEventListener('click', () => {
+          li.classList.toggle('checked');
+        });
+
+        listElement.appendChild(li);
+      });
     });
+
+    checkScroll();
   };
 
   selectMonth.addEventListener('change', updateDayTitles);
