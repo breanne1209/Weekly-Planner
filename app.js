@@ -1,4 +1,40 @@
-let entries = {};
+function loadTodoItems() {
+  const todoItemsTextArray = JSON.parse(window.localStorage.getItem(localStorageKey));
+  if(todoItemsTextArray) {
+    todoItemsTextArray.forEach(todoItemText => {
+      const todoItem = document.createElement('li');
+      todoItem.textContent = todoItemText;
+      todoItem.addEventListener('click', () => {
+        todoItem.classList.toggle('checked');
+      });
+      todoItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      const span = document.createElement('span');
+      span.textContent = '\u00D7';
+      span.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.target.parentElement.remove();
+        checkScroll();
+        saveTodoItems();
+      });
+      todoItem.appendChild(span);
+      todoItem.addEventListener('click', () => {
+        todoItem.classList.toggle('checked');
+      });
+      document.querySelector('.day ul').appendChild(todoItem);
+    });
+  }
+}
+
+function saveDayToMonthandWeek() {
+  const month = document.getElementById('select-month').value;
+  const week = document.getElementById('select-week').value;
+  const dayIndex = elDay.getAttribute('data-day');
+  const key = `${month}-${week}-${dayIndex}`;
+  window.localStorage.setItem(localStorageKey, JSON.stringify(todoItemsTextArray));
+}
+
 
 const clickPlus = () => {
   document.querySelectorAll('.day button').forEach(el => {
@@ -14,11 +50,6 @@ const clickPlus = () => {
         const dayIndex = elDay.getAttribute('data-day');
         const key = `${month}-${week}-${dayIndex}`;
 
-        if (!entries[key]) {
-          entries[key] = [];
-        }
-
-        entries[key].push(val);
 
         let li = document.createElement('li');
         li.innerHTML = val;
@@ -30,7 +61,7 @@ const clickPlus = () => {
           e.stopPropagation();
           e.target.parentElement.remove();
           checkScroll();
-          saveEntries();
+          
         });
 
         li.appendChild(span);
@@ -40,7 +71,7 @@ const clickPlus = () => {
         });
 
         checkScroll();
-        saveEntries();
+       
       }
       elDay.querySelector('input').value = '';
     });
@@ -115,19 +146,11 @@ const displayWeatherData = (weatherData) => {
   weatherIconElement.src = imagePath;
 };
 
-const saveEntries = () => {
-  localStorage.setItem('entries', JSON.stringify(entries));
-};
-
-const loadEntries = () => {
-  const savedEntries = JSON.parse(localStorage.getItem('entries')) || {};
-  entries = savedEntries;
-};
 
 window.addEventListener('load', () => {
   clickPlus();
   getWeatherData();
-  loadEntries();
+
 
   const selectMonth = document.getElementById('select-month');
   const selectWeek = document.getElementById('select-week');
