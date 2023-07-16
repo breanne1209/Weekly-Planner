@@ -12,7 +12,6 @@ const clickPlus = () => {
         const dayIndex = elDay.getAttribute('data-day');
         const key = `${month}-${week}-${dayIndex}`;
 
-
         let li = document.createElement('li');
         li.innerHTML = val;
         elDay.querySelector('ul').appendChild(li);
@@ -23,7 +22,7 @@ const clickPlus = () => {
           e.stopPropagation();
           e.target.parentElement.remove();
           checkScroll();
-          
+          saveData();
         });
 
         li.appendChild(span);
@@ -33,7 +32,7 @@ const clickPlus = () => {
         });
 
         checkScroll();
-       
+        saveData();
       }
       elDay.querySelector('input').value = '';
     });
@@ -55,6 +54,88 @@ const checkScroll = () => {
   });
 };
 
+  const saveData = () => {
+    const dayElements = document.querySelectorAll('.day');
+    const data = {};
+  
+    dayElements.forEach(dayElement => {
+      const month = document.getElementById('select-month').value;
+      const week = document.getElementById('select-week').value;
+      const dayIndex = dayElement.getAttribute('data-day');
+      const key = `${month}-${week}-${dayIndex}`;
+  
+      const liElements = dayElement.querySelectorAll('li');
+      const values = Array.from(liElements).map(li => li.innerHTML);
+  
+      data[key] = values;
+    });
+  
+    localStorage.setItem('scheduleData', JSON.stringify(data));
+  };
+
+  const loadData = () => {
+    const savedData = JSON.parse(localStorage.getItem('scheduleData')) || {};
+    const month = document.getElementById('select-month').value;
+    const week = document.getElementById('select-week').value;
+  
+    const data = savedData[`${month}-${week}`] || {};
+  
+    const dayElements = document.querySelectorAll('.day');
+    dayElements.forEach(dayElement => {
+      const dayIndex = dayElement.getAttribute('data-day');
+      const key = `${month}-${week}-${dayIndex}`;
+  
+      const values = data[key];
+      if (values && values.length > 0) {
+        values.forEach(value => {
+          let li = document.createElement('li');
+          li.innerHTML = value;
+          dayElement.querySelector('ul').appendChild(li);
+  
+          let span = document.createElement('span');
+          span.innerHTML = "\u00d7";
+          span.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.target.parentElement.remove();
+            checkScroll();
+            saveData();
+          });
+  
+          li.appendChild(span);
+  
+          li.addEventListener('click', () => {
+            li.classList.toggle('checked');
+          });
+        });
+      }
+    });
+  };
+  
+
+
+  const clearData = () => {
+    const month = document.getElementById('select-month').value;
+    const week = document.getElementById('select-week').value;
+  
+    const dayElements = document.querySelectorAll('.day');
+    dayElements.forEach(dayElement => {
+      const dayIndex = dayElement.getAttribute('data-day');
+      const key = `${month}-${week}-${dayIndex}`;
+  
+      // Clear the li elements for the current month and week
+      if (dayElement.querySelector('ul').getAttribute('data-key') === key) {
+        dayElement.querySelector('ul').innerHTML = '';
+      } else {
+        // Clear the li elements for other months and weeks
+        dayElement.querySelector('ul').innerHTML = '';
+        dayElement.querySelector('ul').setAttribute('data-key', key);
+      }
+    });
+  
+    saveData();
+  };
+  
+  
 
 const getWeatherData = () => {
   const xhr = new XMLHttpRequest();
@@ -108,10 +189,11 @@ const displayWeatherData = (weatherData) => {
   weatherIconElement.src = imagePath;
 };
 
-
 window.addEventListener('load', () => {
   clickPlus();
   getWeatherData();
+  loadData();
+  saveData();
 
 
   const selectMonth = document.getElementById('select-month');
@@ -122,27 +204,34 @@ window.addEventListener('load', () => {
     const month = selectMonth.value;
     const week = selectWeek.value;
 
+    clearData();
+
     const startDate = new Date(`${month} 1, ${new Date().getFullYear()}`);
     const daysToAdd = (week - 1) * 7;
     startDate.setDate(startDate.getDate() + daysToAdd);
-
     const dayElements = document.querySelectorAll('.day');
     dayElements.forEach((dayElement, index) => {
       const currentDate = new Date(startDate);
       currentDate.setDate(currentDate.getDate() + index);
-
       const dayOfWeek = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
       const monthDay = currentDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
-
       const [monthDigit, dayDigit] = monthDay.split('/').map(str => parseInt(str, 10));
       const formattedMonthDay = `${monthDigit}/${dayDigit}`;
-
       dayElement.querySelector('h3').textContent = `${dayOfWeek} ${formattedMonthDay}`;
     });
   };
 
-  selectMonth.addEventListener('change', updateDayTitles);
-  selectWeek.addEventListener('change', updateDayTitles);
+  selectMonth.addEventListener('change', () => {
+    clearData();
+    loadData();
+    updateDayTitles();
+  });
+
+  selectWeek.addEventListener('change', () => {
+    clearData();
+    loadData();
+    updateDayTitles();
+  });
 
   updateDayTitles();
 });

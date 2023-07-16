@@ -14,7 +14,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 500;
-    border: 2px solid #889dcf;
+    border: 1px solid #889dcf;
     background-color: transparent;
     width: 360px;
     height: 280px;
@@ -76,8 +76,12 @@ h1 {
 
 .move-center {
     margin: 0 auto;
-    width: 1600px;
+    width: 1500px;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
 }
 
 #weather-icon {
@@ -97,103 +101,101 @@ h1 {
 }
 
 @media (max-width: 480px) {
- 
+  .move-center {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 320px;
+  }
+  #text-area {
+    max-width: 310px;
+    height: 250px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
     .move-center {
       margin: 0 auto;
       width: 100%;
-      max-width: 320px;
-    }
-    #text-area {
-      max-width: 310px;
-      height: 250px;
-      margin-bottom: 50px;
     }
   }
-  
-  @media (min-width: 768px) and (max-width: 1199.98px) {
-    @supports (-webkit-min-device-pixel-ratio: 0) {
-  
+}
+
+@media (max-width: 991.98px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
     .move-center {
-      margin: 0 auto;
-      width: 100%;
+      max-width: 768px;
+      display: flex;
+      justify-content: center;
     }
-}
-    @media (max-width: 991.98px) {
-        @supports (-webkit-min-device-pixel-ratio: 0) {
-     
-      .move-center {
-        max-width: 7680px;
-        display: flex;
-        justify-content: center;
-      }
-    }
-}
-    
-    @media (max-width: 975px) {
-        @supports (-webkit-min-device-pixel-ratio: 0) {
-     
-      .move-center {
-        max-width: 975px;
-        padding-left: 20px;
-      }
-    }
-}
-    
-    @media (max-width: 952px) {
-        @supports (-webkit-min-device-pixel-ratio: 0) {
-      
-      .move-center {
-        max-width: 952px;
-        padding-left: 20px; 
-      }
-    }
-}
-    
-    @media (min-width: 992px) and (max-width: 1199.98px) {
-        @supports (-webkit-min-device-pixel-ratio: 0) {
-      .move-center {
-        max-width: 900px;
-        padding-left: 20px;
-      }
-      #text-area {
-        max-width: 1000px; 
-        height: 270px; 
-        padding-left: 10px;
-        margin-bottom: 20px; 
-    }
-    }
-}
   }
-  @media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) {
-@supports (-webkit-min-device-pixel-ratio: 0) {
+}
+
+@media (max-width: 975px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
     .move-center {
-      max-width: 1200px; 
+      max-width: 975px;
       padding-left: 20px;
     }
-        #text-area {
-        max-width: 900px; 
-        height: 270px; 
-        padding-left: 10px;
-        margin-bottom: 20px; 
+  }
+}
+
+@media (max-width: 952px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
+    .move-center {
+      max-width: 952px;
+      padding-left: 20px;
     }
   }
 }
-  
-  @media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) {
-    @supports (-webkit-min-device-pixel-ratio: 0) {
-      .move-center {
-        max-width: 1200px;
-        padding-left: 20px;
-      }
-      #text-area {
-        max-width: 900px;
-        height: 270px;
-        padding-left: 10px;
-        margin-bottom: 20px;
-      }
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
+    .move-center {
+      max-width: 700px; 
+      padding-left: 20px;
+    }
+    #text-area {
+      max-width: 1000px;
+      height: 270px;
+      padding-left: 10px;
+      margin-bottom: 20px;
     }
   }
-  
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) and (min-height: 900px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
+    .move-center {
+      max-width: 600px;
+      padding-left: 50px;
+    }
+    #text-area {
+      max-width: 800px;
+      height: 300px;
+      padding-left: 30px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+
+@media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) {
+  @supports (-webkit-min-device-pixel-ratio: 0) {
+    .move-center {
+      max-width: 1200px;
+      padding-left: 20px;
+    }
+    #text-area {
+      max-width: 900px;
+      height: 270px;
+      padding-left: 10px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
 .text-box {
     height: 200px;
     width: 250px;
@@ -259,7 +261,7 @@ select {
 }
 
 #text-area {
-    border: solid 3px #173990;
+    border: solid 1.5px #173990;
 }
 
 button {
