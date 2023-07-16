@@ -113,30 +113,29 @@ const checkScroll = () => {
   
 
 
-  const clearData = () => {
-    const month = document.getElementById('select-month').value;
-    const week = document.getElementById('select-week').value;
-  
-    const dayElements = document.querySelectorAll('.day');
-    dayElements.forEach(dayElement => {
-      const dayIndex = dayElement.getAttribute('data-day');
-      const key = `${month}-${week}-${dayIndex}`;
-  
-      // Clear the li elements for the current month and week
-      if (dayElement.querySelector('ul').getAttribute('data-key') === key) {
-        dayElement.querySelector('ul').innerHTML = '';
-      } else {
-        // Clear the li elements for other months and weeks
-        dayElement.querySelector('ul').innerHTML = '';
-        dayElement.querySelector('ul').setAttribute('data-key', key);
-      }
-    });
-  
-    saveData();
-  };
-  
-  
+const clearData = () => {
+  const month = document.getElementById('select-month').value;
+  const week = document.getElementById('select-week').value;
+  const keyPrefix = `${month}-${week}`;
 
+  const dayElements = document.querySelectorAll('.day');
+  dayElements.forEach(dayElement => {
+    const dayIndex = dayElement.getAttribute('data-day');
+    const key = `${keyPrefix}-${dayIndex}`;
+
+    if (dayElement.querySelector('ul').getAttribute('data-key') === key) {
+      dayElement.querySelector('ul').innerHTML = '';
+    } else if (key.startsWith(keyPrefix)) {
+      // Clear the li elements for other days within the selected month and week
+      dayElement.querySelector('ul').innerHTML = '';
+      dayElement.querySelector('ul').setAttribute('data-key', key);
+    }
+  });
+
+  saveData();
+};
+  
+  
 const getWeatherData = () => {
   const xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
@@ -221,17 +220,17 @@ window.addEventListener('load', () => {
     });
   };
 
-  selectMonth.addEventListener('change', () => {
-    clearData();
-    loadData();
-    updateDayTitles();
-  });
+ selectMonth.addEventListener('change', () => {
+  clearData();
+  updateDayTitles();
+  loadData();
+});
 
-  selectWeek.addEventListener('change', () => {
-    clearData();
-    loadData();
-    updateDayTitles();
-  });
+selectWeek.addEventListener('change', () => {
+  clearData();
+  updateDayTitles();
+  loadData();
+});
 
   updateDayTitles();
 });
